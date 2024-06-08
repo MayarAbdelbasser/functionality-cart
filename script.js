@@ -26,10 +26,11 @@ const products = [
 ];
 
 let productContainer = document.querySelector(".products");
-
+// window.localStorage.clear();
 //getting stored products
 if (window.localStorage.getItem("products")) {
   let productsStored = JSON.parse(window.localStorage.getItem("products"));
+  console.log(productsStored);
   productsStored.forEach((item) => {
     productContainer.innerHTML += `
               <div class="product" id="${item.id}">
@@ -101,15 +102,18 @@ else {
 //delete products
 function deleteItem() {
   let btn = document.querySelectorAll(".del");
+  let productsStored = JSON.parse(window.localStorage.getItem("products"));
   btn.forEach((item) => {
     item.addEventListener("click", function (e) {
       e.target.closest(".product").remove();
-      let index = products.findIndex(
+      let index = productsStored.findIndex(
         (itemy) => itemy.id === e.target.closest(".product").id
       );
       console.log(index);
-      products.splice(index, 1);
-      window.localStorage.setItem("products", JSON.stringify(products));
+      console.log(productsStored);
+      productsStored.splice(index, 1);
+      console.log(productsStored);
+      window.localStorage.setItem("products", JSON.stringify(productsStored));
     });
   });
 }
